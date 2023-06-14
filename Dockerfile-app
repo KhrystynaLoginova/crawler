@@ -1,0 +1,10 @@
+# Use an official OpenJDK runtime as the base image
+FROM openjdk:11-jdk-slim
+
+WORKDIR /app
+
+COPY build/lib/crawler-0.0.1-plain.jar .
+
+EXPOSE 8080
+
+CMD ["java", "-jar", "crawler-0.0.1-plain.jar"]

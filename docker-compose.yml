@@ -1,0 +1,28 @@
+version: '3'
+services:
+  mysql:
+    build:
+      context: .
+      dockerfile: Dockerfile-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: your_password
+    ports:
+      - 3306:3306
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  spring-app:
+    build:
+      context: .
+      dockerfile: Dockerfile-app
+    depends_on:
+      - mysql
+    ports:
+      - 8080:8080
+
+  react-ui:
+    build:
+      context: ./crawler-ui
+      dockerfile: Dockerfile-ui
+    ports:
+      - 3000:3000
